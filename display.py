@@ -37,6 +37,7 @@ class Display():
     def on_click(self, event):
         if event.button == 1:
             particle = physics.particle(20, self.width, self.height, event.pos[0], event.pos[1])
+            # particle.collision_list = self.particle_array
             self.particle_array.append(particle)
         elif event.button == 3:
             particle = physics.particle(20, self.width, self.height, event.pos[0], event.pos[1])

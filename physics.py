@@ -9,6 +9,7 @@ class particle:
     def __init__(self, radius, width, height, x, y):
         self.width, self.height = width, height
         self.radius = radius
+        self.mass = 1
         self.x, self.y = (x, y)
         self.vx, self.vy = (0, 0)
         self.color = self.random_color()
@@ -44,18 +45,28 @@ class particle:
             if self.distance(particle) <= 0:
                 self.collide(particle)
 
-    def collide(self, particle):
-        pass
-
     def distance(self, particle):
         x1, y1 = self.x, self.y
         x2, y2 = particle.x, particle.y 
         return sqrt((x2 - x1)**2 + (y2 - y1)**2)
     
-    def calculuate_collision(self, x1, y1, x2, y2):
-        v1
-        num = v1*cos(ma1-ca)*(m1-m2) + 2*m2*v2*cos(ma2-ca)
-        return num
+    def collide(self, particle):
+        v1 = self.scalar_size(self)
+        v2 = self.scalar_size(particle)
+        ma1 = self.movement_angle(self)
+        ma2 = self.movement_angle(particle)
+        ca = self.contanct_angle(particle)
+        ms1 = self.mass
+        ms2 = particle.mass
+        self.vx, self.vy = self.calculate_collision(v1, v2, ma1, ma2, ca, ms1, ms2)
+        particle.vx, self.vy = self.calculate_collision(v2, v1, ma2, ma1, ca, ms2, ms1)
+
+    def calculate_collision(self, v1, v2, ma1, ma2, ca, ms1, ms2):
+        num = v1*cos(ma1 - ca)*(ms1 - ms2) + 2*ms2*v2*cos(ma2 - ca)
+        den = ms1+ms2
+        fx_side = cos(ca)+v1*sin(ma1-ca)*cos(ca+pi/2)
+        fy_side = sin(ca)+v1*sin(ma1-ca)*sin(ca+pi/2)
+        return ((num/den)*fx_side, (num/den)*fy_side)
 
     def movement_angle(self, particle):
         return 0
@@ -63,12 +74,8 @@ class particle:
     def contanct_angle(self, particle):
         return 0
 
-    def magnitude(self, particle):
+    def scalar_size(self, particle):
         return 0
-
-#     @staticmethod
-#     def contact_angle(a, b):
-        
 
     def getpos(self):
         return (round(self.x), round(self.y))
