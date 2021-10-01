@@ -4,7 +4,7 @@ from random import randrange
 class particle:
 
     g = 9.8
-    dt = .1
+    dt = .2
 
     def __init__(self, radius, width, height, x, y):
         self.width, self.height = width, height
@@ -51,6 +51,24 @@ class particle:
         x1, y1 = self.x, self.y
         x2, y2 = particle.x, particle.y 
         return sqrt((x2 - x1)**2 + (y2 - y1)**2)
+    
+    def calculuate_collision(self, x1, y1, x2, y2):
+        v1
+        num = v1*cos(ma1-ca)*(m1-m2) + 2*m2*v2*cos(ma2-ca)
+        return num
+
+    def movement_angle(self, particle):
+        return 0
+
+    def contanct_angle(self, particle):
+        return 0
+
+    def magnitude(self, particle):
+        return 0
+
+#     @staticmethod
+#     def contact_angle(a, b):
+        
 
     def getpos(self):
         return (round(self.x), round(self.y))

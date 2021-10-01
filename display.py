@@ -6,6 +6,7 @@ class Display():
         pygame.init()
         self.display = pygame.display.set_mode((width, height))
         self.width, self.height = self.display.get_size()
+        self.mass = 1
         self.particle_array = []
         pygame.display.flip()
         # self.particle_array.append(physics.particle(20, width, height, 200, 200))
@@ -23,7 +24,6 @@ class Display():
             self.draw()
             pygame.display.flip()
             pygame.time.wait(20)
-
 
         pygame.quit()        
 
