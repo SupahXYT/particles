@@ -1,4 +1,3 @@
-from math import atan, cos, sin, pi, sqrt
 from random import randrange
 
 class particle:
@@ -9,7 +8,10 @@ class particle:
     def __init__(self, mass, width, height, x, y):
         self.width, self.height = width, height
         self.radius = mass
-        self.mass = mass
+        if mass > 90:
+            self.mass = mass*10
+        else:
+            self.mass = mass
         self.x, self.y = (x, y)
         self.vx, self.vy = (0, 0)
         self.color = self.random_color()
@@ -22,27 +24,31 @@ class particle:
         return (r, g, b)
 
     def move(self):
-        self.vy += self.g*self.dt
-
-        # wall collisions 
-        if(self.y + self.radius > self.height): 
-            self.y = self.height - self.radius
-            self.vy = -.9*self.vy
-        if(self.y - self.radius < 0):
-            self.vy = -.9*self.vy
-            self.y = 0 + self.radius 
-        if(self.x + self.radius > self.width):
-            self.x = self.width - self.radius
-            self.vx = -.9*self.vx
-        if(self.x - self.radius < 0):
-            self.x = 0 + self.radius
-            self.vx = -.9*self.vx
 
         # 2D elastic collision
         for particle in self.collision_list:
             if self.distance_squared(particle) <= (self.radius + particle.radius)**2:
                 self.collide(particle)
 
+        # wall collisions 
+        if(self.y + self.radius > self.height): 
+            self.y = self.height - self.radius
+            self.vy = -.9*self.vy
+            self.vx = .9*self.vx
+        if(self.y - self.radius < 0):
+            self.y = 0 + self.radius 
+            self.vy = -.9*self.vy
+            self.vx = .9*self.vx
+        if(self.x + self.radius > self.width):
+            self.x = self.width - self.radius
+            self.vx = -.9*self.vx
+            self.vy = .9*self.vy
+        if(self.x - self.radius < 0):
+            self.x = 0 + self.radius
+            self.vx = -.9*self.vx
+            self.vy = .9*self.vy
+
+        self.vy += self.g*self.dt
         self.y += self.vy*self.dt
         self.x += self.vx*self.dt
 
@@ -66,6 +72,7 @@ class particle:
             mass_sum = self.mass + particle.mass
             col_weight_self = 2*particle.mass / mass_sum
             col_weight_particle = 2*self.mass / mass_sum 
+            self.x += col_weight_self * xcol
             self.vx += .9*col_weight_self * xcol
             self.vy += .9*col_weight_self * ycol
             particle.vx -= .9*col_weight_particle * xcol
@@ -76,6 +83,13 @@ class particle:
         for particle in list:
             if(self is not particle):
                 self.collision_list.append(particle)
+
+    def other_lines(self):
+        lines = []
+        for particle in self.collision_list:
+            lines.append((self.x, self.y))
+            lines.append((particle.x, particle.y))
+        return lines
 
     def getpos(self):
         return (round(self.x), round(self.y))

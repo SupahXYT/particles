@@ -1,5 +1,4 @@
 import pygame, physics
-import math
 
 class Display():
     def __init__(self, width, height):
@@ -29,14 +28,19 @@ class Display():
 
     def draw(self):
         self.display.fill((0, 0, 0))
+#         for particle in self.particle_array:
+#             lines = particle.other_lines()
+#             if len(lines) > 1:
+#                 pygame.draw.lines(self.display, (255, 255, 255), False, lines)
+
         for particle in self.particle_array:
             particle.move()
             pygame.draw.circle(self.display, particle.color, particle.getpos(), particle.radius)
-            self.draw_vel_line(particle)
+            # self.draw_vel_line(particle)
 
     def on_click(self, event):
         if event.button == 1:
-            particle = physics.particle(50, self.width, self.height, event.pos[0], event.pos[1])
+            particle = physics.particle(100, self.width, self.height, event.pos[0], event.pos[1])
             self.particle_array.append(particle)
             for p in self.particle_array:
                 p.update_col_list(self.particle_array)
