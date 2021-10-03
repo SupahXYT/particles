@@ -36,15 +36,19 @@ class Display():
 
     def on_click(self, event):
         if event.button == 1:
-            particle = physics.particle(20, self.width, self.height, event.pos[0], event.pos[1])
-            # particle.collision_list = self.particle_array
+            particle = physics.particle(50, self.width, self.height, event.pos[0], event.pos[1])
             self.particle_array.append(particle)
+            for p in self.particle_array:
+                p.update_col_list(self.particle_array)
+            
         elif event.button == 3:
             particle = physics.particle(20, self.width, self.height, event.pos[0], event.pos[1])
             vx = physics.randrange(-30, 30)
             vy = physics.randrange(-30, 30)
             particle.vx, particle.vy = vx, vy
             self.particle_array.append(particle)
+            for p in self.particle_array:
+                p.update_col_list(self.particle_array)
 
     def draw_vel_line(self, particle):
         start = (particle.x, particle.y)
