@@ -2,8 +2,9 @@ from random import randrange
 
 class particle:
 
-    g = 9.8
+    g = 0
     dt = .2
+    f = 1
 
     def __init__(self, mass, width, height, x, y):
         self.width, self.height = width, height
@@ -33,20 +34,20 @@ class particle:
         # wall collisions 
         if(self.y + self.radius > self.height): 
             self.y = self.height - self.radius
-            self.vy = -.9*self.vy
-            self.vx = .9*self.vx
+            self.vy = -self.f*self.vy
+            self.vx = self.f*self.vx
         if(self.y - self.radius < 0):
             self.y = 0 + self.radius 
-            self.vy = -.9*self.vy
-            self.vx = .9*self.vx
+            self.vy = -self.f*self.vy
+            self.vx = self.f*self.vx
         if(self.x + self.radius > self.width):
             self.x = self.width - self.radius
-            self.vx = -.9*self.vx
-            self.vy = .9*self.vy
+            self.vx = -self.f*self.vx
+            self.vy = self.f*self.vy
         if(self.x - self.radius < 0):
             self.x = 0 + self.radius
-            self.vx = -.9*self.vx
-            self.vy = .9*self.vy
+            self.vx = -self.f*self.vx
+            self.vy = self.f*self.vy
 
         self.vy += self.g*self.dt
         self.y += self.vy*self.dt
@@ -72,11 +73,10 @@ class particle:
             mass_sum = self.mass + particle.mass
             col_weight_self = 2*particle.mass / mass_sum
             col_weight_particle = 2*self.mass / mass_sum 
-            self.x += col_weight_self * xcol
-            self.vx += .9*col_weight_self * xcol
-            self.vy += .9*col_weight_self * ycol
-            particle.vx -= .9*col_weight_particle * xcol
-            particle.vy -= .9*col_weight_particle * ycol
+            self.vx += col_weight_self * xcol
+            self.vy += col_weight_self * ycol
+            particle.vx -= self.f*col_weight_particle * xcol
+            particle.vy -= self.f*col_weight_particle * ycol
 
     def update_col_list(self, list):
         self.collision_list= []
