@@ -32,22 +32,22 @@ class particle:
                 self.collide(particle)
 
         # wall collisions 
-        if(self.y + self.radius > self.height): 
-            self.y = self.height - self.radius
-            self.vy = -self.f*self.vy
-            self.vx = self.f*self.vx
-        if(self.y - self.radius < 0):
-            self.y = 0 + self.radius 
-            self.vy = -self.f*self.vy
-            self.vx = self.f*self.vx
-        if(self.x + self.radius > self.width):
-            self.x = self.width - self.radius
-            self.vx = -self.f*self.vx
-            self.vy = self.f*self.vy
-        if(self.x - self.radius < 0):
-            self.x = 0 + self.radius
-            self.vx = -self.f*self.vx
-            self.vy = self.f*self.vy
+        # if(self.y + self.radius > self.height): 
+        #     self.y = self.height - self.radius
+        #     self.vy = -self.f*self.vy
+        #     self.vx = self.f*self.vx
+        # if(self.y - self.radius < 0):
+        #     self.y = 0 + self.radius 
+        #     self.vy = -self.f*self.vy
+        #     self.vx = self.f*self.vx
+        # if(self.x + self.radius > self.width):
+        #     self.x = self.width - self.radius
+        #     self.vx = -self.f*self.vx
+        #     self.vy = self.f*self.vy
+        # if(self.x - self.radius < 0):
+        #     self.x = 0 + self.radius
+        #     self.vx = -self.f*self.vx
+        #     self.vy = self.f*self.vy
 
         self.vy += self.g*self.dt
         self.y += self.vy*self.dt

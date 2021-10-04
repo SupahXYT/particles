@@ -28,10 +28,10 @@ class Display():
 
     def draw(self):
         self.display.fill((0, 0, 0))
-#         for particle in self.particle_array:
-#             lines = particle.other_lines()
-#             if len(lines) > 1:
-#                 pygame.draw.lines(self.display, (255, 255, 255), False, lines)
+        for particle in self.particle_array:
+            lines = particle.other_lines()
+            if len(lines) > 1:
+                pygame.draw.lines(self.display, (255, 255, 255), False, lines)
 
         for particle in self.particle_array:
             particle.move()
