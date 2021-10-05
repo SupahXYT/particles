@@ -2,7 +2,7 @@ from random import randrange
 
 class particle:
 
-    g = 0
+    g = 9.8
     dt = .2
     f = 1
 
@@ -28,37 +28,37 @@ class particle:
 
         # 2D elastic collision
         for particle in self.collision_list:
-            if self.distance_squared(particle) <= (self.radius + particle.radius)**2:
-                self.collide(particle)
+            if self.distance_squared_to(particle) <= (self.radius + particle.radius)**2:
+                self.collide_with(particle)
 
         # wall collisions 
-        # if(self.y + self.radius > self.height): 
-        #     self.y = self.height - self.radius
-        #     self.vy = -self.f*self.vy
-        #     self.vx = self.f*self.vx
-        # if(self.y - self.radius < 0):
-        #     self.y = 0 + self.radius 
-        #     self.vy = -self.f*self.vy
-        #     self.vx = self.f*self.vx
-        # if(self.x + self.radius > self.width):
-        #     self.x = self.width - self.radius
-        #     self.vx = -self.f*self.vx
-        #     self.vy = self.f*self.vy
-        # if(self.x - self.radius < 0):
-        #     self.x = 0 + self.radius
-        #     self.vx = -self.f*self.vx
-        #     self.vy = self.f*self.vy
+        if(self.y + self.radius > self.height): 
+            self.y = self.height - self.radius
+            self.vy = -self.f*self.vy
+            self.vx = self.f*self.vx
+        if(self.y - self.radius < 0):
+            self.y = 0 + self.radius 
+            self.vy = -self.f*self.vy
+            self.vx = self.f*self.vx
+        if(self.x + self.radius > self.width):
+            self.x = self.width - self.radius
+            self.vx = -self.f*self.vx
+            self.vy = self.f*self.vy
+        if(self.x - self.radius < 0):
+            self.x = 0 + self.radius
+            self.vx = -self.f*self.vx
+            self.vy = self.f*self.vy
 
         self.vy += self.g*self.dt
         self.y += self.vy*self.dt
         self.x += self.vx*self.dt
 
-    def distance_squared(self, particle):
+    def distance_squared_to(self, particle):
         x1, y1 = self.x, self.y
         x2, y2 = particle.x, particle.y 
         return (x2 - x1)**2 + (y2 - y1)**2
     
-    def collide(self, particle):
+    def collide_with(self, particle):
         distx = self.x - particle.x
         disty = self.y - particle.y
         vx = particle.vx - self.vx
